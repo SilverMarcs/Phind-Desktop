@@ -1,11 +1,12 @@
 {
-  "name": "phind-electron",
+  "name": "Phind",
   "version": "1.0.0",
   "description": "an electron wrapper for phind.com",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "electron .",
+    "build": "electron-builder"
   },
   "repository": {
     "type": "git",
@@ -14,6 +15,7 @@
   "author": "Zabir Raihan",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^25.0.1"
+    "electron": "^25.0.1",
+    "electron-builder": "^23.6.0"
   }
 }

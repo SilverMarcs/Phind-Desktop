@@ -10,20 +10,35 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 1300,
     height: 900,
-    titleBarStyle: 'hidden',
+    titleBarStyle: process.platform === 'darwin' ? 'hidden' : 'default',
+    // titleBarStyle: 'hidden',
     trafficLightPosition: { x: 21, y: 19 },
-    webPreferences: {
-      // preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-    }
+    icon: __dirname + '/build/icon.icns',
+    vibrancy: 'sidebar',
   })
+
+
 
   // and load the index.html of the app.
   //   mainWindow.loadFile('index.html')
   mainWindow.loadURL('http://www.phind.com')
 
-  mainWindow.webContents.on('did-finish-load', applyStylesAndScripts(mainWindow));
-  // mainWindow.webContents.on('did-navigate-in-page', applyStylesAndScripts(mainWindow));
+  const applyStylesAndScripts = () => {
+    const css = `
+    .input-group.d-flex.flex-row-reverse { position: sticky !important; z-index: 99 !important; background-color: rgba(34, 34, 34, 1) !important; -webkit-app-region: drag !important }
+      .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
+      .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
+      .btn.btn-sm.text-dark.bg-white,
+      .tooltip-wrap.btn.btn-circle {
+        -webkit-app-region: no-drag;
+      }
+    `;
+  
+  mainWindow.webContents.insertCSS(css)
+  };
+
+  mainWindow.webContents.on('did-finish-load', applyStylesAndScripts);
+  mainWindow.webContents.on('did-navigate-in-page', applyStylesAndScripts);
 
 }
 
