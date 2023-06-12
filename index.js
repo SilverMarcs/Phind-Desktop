@@ -1,6 +1,4 @@
 const { app, BrowserWindow } = require("electron");
-const { remote } = require("electron");
-const path = require("path");
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
@@ -8,6 +6,8 @@ const createWindow = () => {
     height: 900,
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 21, y: 20 },
+    minWidth: 430,
+    minHeight: 700,
     icon: __dirname + "/build/icon.icns",
   });
 
