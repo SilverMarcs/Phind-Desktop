@@ -5,7 +5,7 @@ const createWindow = () => {
     width: 1300,
     height: 900,
     titleBarStyle: "hidden",
-    trafficLightPosition: { x: 21, y: 20 },
+    trafficLightPosition: { x: 21, y: 21 },
     minWidth: 430,
     minHeight: 700,
     icon: __dirname + "/build/icon.icns",
@@ -14,44 +14,9 @@ const createWindow = () => {
   mainWindow.loadURL("http://www.phind.com");
 
   const applyStylesAndScripts = () => {
-    const css = `
-    .input-group.d-flex.flex-row-reverse { position: sticky !important; z-index: 99 !important; -webkit-app-region: drag !important }
-      .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
-      .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
-      .btn.btn-sm.text-dark.bg-white,
-      .tooltip-wrap.btn.btn-circle {
-        -webkit-app-region: no-drag;
-      }
-    [data-theme="dark"] .input-group.d-flex.flex-row-reverse {
-      background-color: rgba(34, 34, 34, 1) !important;
-    }
-    [data-theme="light"] .input-group.d-flex.flex-row-reverse {
-      background-color: rgba(255, 255, 255, 1) !important;
-    }
-    `;
-
     mainWindow.webContents.insertCSS(css);
 
-    mainWindow.webContents.executeJavaScript(`
-      const targetNode = document.documentElement;
-      const config = { attributes: true, childList: false, subtree: false };
-      const callback = (mutationsList, observer) => {
-        for (const mutation of mutationsList) {
-          if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-            const theme = targetNode.getAttribute('data-theme');
-            if (theme === 'dark') {
-              document.body.classList.remove('light-theme');
-              document.body.classList.add('dark-theme');
-            } else {
-              document.body.classList.remove('dark-theme');
-              document.body.classList.add('light-theme');
-            }
-          }
-        }
-      };
-      const observer = new MutationObserver(callback);
-      observer.observe(targetNode, config);
-    `);
+    mainWindow.webContents.executeJavaScript(forwardBack + detectTheme);
   };
 
   mainWindow.webContents.on("did-finish-load", applyStylesAndScripts);
@@ -69,3 +34,74 @@ app.whenReady().then(() => {
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") app.quit();
 });
+
+const forwardBack = `
+  const backButton = document.createElement('button');
+  backButton.textContent = '<';
+  backButton.style.position = 'fixed';
+  backButton.style.top = '0.5px'; // Add padding on top
+  backButton.style.left = '110px';
+  backButton.style.padding = '10px 20px'; // Increase button size
+  backButton.style.fontSize = '24px'; // Increase font size
+  backButton.style.backgroundColor = 'transparent';
+  backButton.style.color = 'inherit';
+  backButton.style.border = 'none';
+  backButton.style.zIndex = '100';
+  backButton.style.webkitAppRegion = 'no-drag';
+  backButton.onclick = () => window.history.back();
+
+  const forwardButton = document.createElement('button');
+  forwardButton.textContent = '>';
+  forwardButton.style.position = 'fixed';
+  forwardButton.style.top = '0.5px'; // Add padding on top
+  forwardButton.style.left = '160px';
+  forwardButton.style.padding = '10px 20px'; // Increase button size
+  forwardButton.style.fontSize = '24px'; // Increase font size
+  forwardButton.style.zIndex = '100';
+  forwardButton.style.backgroundColor = 'transparent';
+  forwardButton.style.color = 'inherit';
+  forwardButton.style.border = 'none';
+  forwardButton.style.webkitAppRegion = 'no-drag';
+  forwardButton.onclick = () => window.history.forward();
+
+
+  document.body.appendChild(backButton);
+  document.body.appendChild(forwardButton);
+  `;
+
+const detectTheme = `
+  const targetNode = document.documentElement;
+  const config = { attributes: true, childList: false, subtree: false };
+  const callback = (mutationsList, observer) => {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+        const theme = targetNode.getAttribute('data-theme');
+        if (theme === 'dark') {
+          document.body.classList.remove('light-theme');
+          document.body.classList.add('dark-theme');
+        } else {
+          document.body.classList.remove('dark-theme');
+          document.body.classList.add('light-theme');
+        }
+      }
+    }
+  };
+  const observer = new MutationObserver(callback);
+  observer.observe(targetNode, config);
+  `;
+
+const css = `
+  .input-group.d-flex.flex-row-reverse { position: sticky !important; z-index: 99 !important; -webkit-app-region: drag !important }
+    .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
+    .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
+    .btn.btn-sm.text-dark.bg-white,
+    .tooltip-wrap.btn.btn-circle {
+      -webkit-app-region: no-drag;
+    }
+  [data-theme="dark"] .input-group.d-flex.flex-row-reverse {
+    background-color: rgba(34, 34, 34, 1) !important;
+  }
+  [data-theme="light"] .input-group.d-flex.flex-row-reverse {
+    background-color: rgba(255, 255, 255, 1) !important;
+  }
+  `;
