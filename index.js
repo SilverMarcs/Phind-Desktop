@@ -1,6 +1,9 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, globalShortcut } = require("electron");
 
 const createWindow = () => {
+  globalShortcut.register("Control+Space", () => {
+    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+  });
   const mainWindow = new BrowserWindow({
     width: 1300,
     height: 900,
@@ -32,6 +35,7 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
+  globalShortcut.unregisterAll();
   if (process.platform !== "darwin") app.quit();
 });
 
