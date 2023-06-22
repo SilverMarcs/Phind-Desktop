@@ -2,7 +2,11 @@ const { app, BrowserWindow, globalShortcut } = require("electron");
 
 const createWindow = () => {
   globalShortcut.register("Control+Space", () => {
-    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+    if (mainWindow.isVisible() && mainWindow.isFocused())
+      mainWindow.hide()
+    else {
+      mainWindow.show()
+    }
   });
   const mainWindow = new BrowserWindow({
     width: 1300,
