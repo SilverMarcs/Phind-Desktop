@@ -2,17 +2,16 @@ const { app, BrowserWindow, globalShortcut } = require("electron");
 
 const createWindow = () => {
   globalShortcut.register("Control+Space", () => {
-    if (mainWindow.isVisible() && mainWindow.isFocused())
-      mainWindow.hide()
+    if (mainWindow.isVisible() && mainWindow.isFocused()) mainWindow.hide();
     else {
-      mainWindow.show()
+      mainWindow.show();
     }
   });
   const mainWindow = new BrowserWindow({
     width: 1300,
-    height: 900,
+    height: 860,
     titleBarStyle: "hidden",
-    trafficLightPosition: { x: 21, y: 21 },
+    trafficLightPosition: { x: 18, y: 18 },
     minWidth: 430,
     minHeight: 700,
     icon: __dirname + "/build/icon.icns",
@@ -47,10 +46,10 @@ const forwardBack = `
   const backButton = document.createElement('button');
   backButton.textContent = '<';
   backButton.style.position = 'fixed';
-  backButton.style.top = '0.5px'; // Add padding on top
+  backButton.style.top = '0px'; // Add padding on top
   backButton.style.left = '110px';
   backButton.style.padding = '10px 20px'; // Increase button size
-  backButton.style.fontSize = '24px'; // Increase font size
+  backButton.style.fontSize = '22px'; // Increase font size
   backButton.style.backgroundColor = 'transparent';
   backButton.style.color = 'inherit';
   backButton.style.border = 'none';
@@ -61,10 +60,10 @@ const forwardBack = `
   const forwardButton = document.createElement('button');
   forwardButton.textContent = '>';
   forwardButton.style.position = 'fixed';
-  forwardButton.style.top = '0.5px'; // Add padding on top
+  forwardButton.style.top = '0px'; // Add padding on top
   forwardButton.style.left = '160px';
   forwardButton.style.padding = '10px 20px'; // Increase button size
-  forwardButton.style.fontSize = '24px'; // Increase font size
+  forwardButton.style.fontSize = '22px'; // Increase font size
   forwardButton.style.zIndex = '100';
   forwardButton.style.backgroundColor = 'transparent';
   forwardButton.style.color = 'inherit';
@@ -99,17 +98,50 @@ const detectTheme = `
   `;
 
 const css = `
-  .input-group.d-flex.flex-row-reverse { position: sticky !important; z-index: 99 !important; -webkit-app-region: drag !important }
-    .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
-    .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
-    .btn.btn-sm.text-dark.bg-white,
-    .tooltip-wrap.btn.btn-circle {
-      -webkit-app-region: no-drag;
-    }
-  [data-theme="dark"] .input-group.d-flex.flex-row-reverse {
-    background-color: rgba(34, 34, 34, 1) !important;
+  .input-group.d-flex.flex-row-reverse { 
+    position: sticky !important; 
+    z-index: 99 !important; 
+    -webkit-app-region: drag !important;
+    height: 53px !important;
+    align-content: center !important;
   }
+
+  .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
+  .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
+  .btn.btn-sm.text-dark.bg-white,
+  .tooltip-wrap.btn.btn-circle {
+    -webkit-app-region: no-drag;
+  }
+
+  [data-theme="dark"] .input-group.d-flex.flex-row-reverse {
+    background-color: rgba(57, 58, 59, 1) !important;
+    border-bottom: 1px solid black !important;
+  }
+
   [data-theme="light"] .input-group.d-flex.flex-row-reverse {
     background-color: rgba(255, 255, 255, 1) !important;
+    border-bottom: 1px solid #D0D1D1 !important;
+  }
+
+  [data-theme="dark"] .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle {
+    background-color: rgba(57, 58, 59, 1) !important;
+    height: 55px !important;
+  }
+
+  [data-theme="light"] .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle {
+    background-color: rgba(255, 255, 255, 1) !important;
+    height: 55px !important;
+  }
+
+  [data-theme="dark"] .body {
+    background-color: #212122 !important;
+  }
+
+  .btn {
+    border-radius: 0.5rem !important;
+  }
+
+  .dropdown-menu {
+    border-radius: 1rem !important;
   }
   `;
