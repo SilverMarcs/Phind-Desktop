@@ -2,10 +2,9 @@ const { app, BrowserWindow, globalShortcut } = require("electron");
 
 const createWindow = () => {
   globalShortcut.register("Control+Space", () => {
-    if (mainWindow.isVisible() && mainWindow.isFocused())
-      mainWindow.hide()
+    if (mainWindow.isVisible() && mainWindow.isFocused()) mainWindow.hide();
     else {
-      mainWindow.show()
+      mainWindow.show();
     }
   });
   const mainWindow = new BrowserWindow({
@@ -44,19 +43,19 @@ app.on("window-all-closed", () => {
 });
 
 const forwardBack = `
-  const backButton = document.createElement('button');
-  backButton.textContent = '<';
-  backButton.style.position = 'fixed';
-  backButton.style.top = '0.5px'; // Add padding on top
-  backButton.style.left = '110px';
-  backButton.style.padding = '10px 20px'; // Increase button size
-  backButton.style.fontSize = '24px'; // Increase font size
-  backButton.style.backgroundColor = 'transparent';
-  backButton.style.color = 'inherit';
-  backButton.style.border = 'none';
-  backButton.style.zIndex = '100';
-  backButton.style.webkitAppRegion = 'no-drag';
-  backButton.onclick = () => window.history.back();
+  const backwardButton = document.createElement('button');
+  backwardButton.textContent = '<';
+  backwardButton.style.position = 'fixed';
+  backwardButton.style.top = '0.5px'; // Add padding on top
+  backwardButton.style.left = '110px';
+  backwardButton.style.padding = '10px 20px'; // Increase button size
+  backwardButton.style.fontSize = '24px'; // Increase font size
+  backwardButton.style.backgroundColor = 'transparent';
+  backwardButton.style.color = 'inherit';
+  backwardButton.style.border = 'none';
+  backwardButton.style.zIndex = '100';
+  backwardButton.style.webkitAppRegion = 'no-drag';
+  backwardButton.onclick = () => window.history.back();
 
   const forwardButton = document.createElement('button');
   forwardButton.textContent = '>';
@@ -73,7 +72,7 @@ const forwardBack = `
   forwardButton.onclick = () => window.history.forward();
 
 
-  document.body.appendChild(backButton);
+  document.body.appendChild(backwardButton);
   document.body.appendChild(forwardButton);
   `;
 
@@ -107,7 +106,7 @@ const css = `
       -webkit-app-region: no-drag;
     }
   [data-theme="dark"] .input-group.d-flex.flex-row-reverse {
-    background-color: rgba(34, 34, 34, 1) !important;
+    background-color: #171719 !important;
   }
   [data-theme="light"] .input-group.d-flex.flex-row-reverse {
     background-color: rgba(255, 255, 255, 1) !important;
