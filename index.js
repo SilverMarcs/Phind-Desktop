@@ -9,7 +9,7 @@ const createWindow = () => {
   });
   const mainWindow = new BrowserWindow({
     width: 1300,
-    height: 900,
+    height: 1000,
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 21, y: 21 },
     minWidth: 430,
@@ -46,7 +46,7 @@ const forwardBack = `
   const backwardButton = document.createElement('button');
   backwardButton.textContent = '<';
   backwardButton.style.position = 'fixed';
-  backwardButton.style.top = '0.5px'; // Add padding on top
+  backwardButton.style.top = '0.1px'; // Add padding on top
   backwardButton.style.left = '110px';
   backwardButton.style.padding = '10px 20px'; // Increase button size
   backwardButton.style.fontSize = '24px'; // Increase font size
@@ -60,7 +60,7 @@ const forwardBack = `
   const forwardButton = document.createElement('button');
   forwardButton.textContent = '>';
   forwardButton.style.position = 'fixed';
-  forwardButton.style.top = '0.5px'; // Add padding on top
+  forwardButton.style.top = '0.1px'; // Add padding on top
   forwardButton.style.left = '160px';
   forwardButton.style.padding = '10px 20px'; // Increase button size
   forwardButton.style.fontSize = '24px'; // Increase font size
@@ -98,17 +98,32 @@ const detectTheme = `
   `;
 
 const css = `
-  .input-group.d-flex.flex-row-reverse { position: sticky !important; z-index: 99 !important; -webkit-app-region: drag !important }
-    .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
-    .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
-    .btn.btn-sm.text-dark.bg-white,
-    .tooltip-wrap.btn.btn-circle {
-      -webkit-app-region: no-drag;
-    }
+  .input-group.d-flex.flex-row-reverse {
+    -webkit-app-region: drag !important;
+  }
+
+  .btn.btn-circle.dropdown.dropdown-toggle.fs-3,
+  .btn.btn-sm.text-dark.bg-white.dropdown.dropdown-toggle,
+  .btn.btn-sm.text-dark.bg-white,
+  .btn.fs-3.px-2.pt-4,
+  .tooltip-wrap.btn.btn-circle 
+  {
+    -webkit-app-region: no-drag;
+    padding-top: -30px !important;
+  }
+
   [data-theme="dark"] .input-group.d-flex.flex-row-reverse {
     background-color: #171719 !important;
   }
+
   [data-theme="light"] .input-group.d-flex.flex-row-reverse {
     background-color: rgba(255, 255, 255, 1) !important;
   }
+
+  img.img-fluid.ml-1.mb-2.darkmode-img.mt-4.ps-4,
+  img.img-fluid.mb-2.darkmode-img.mt-4 
+  {
+    padding-top: 30px !important;
+  }
+
   `;
