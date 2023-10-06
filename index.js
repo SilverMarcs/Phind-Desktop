@@ -21,8 +21,9 @@ const createWindow = () => {
 
   const applyStylesAndScripts = () => {
     mainWindow.webContents.insertCSS(css);
+    // mainWindow.webContents.executeJavaScript(forwardBack + detectTheme);
+    mainWindow.webContents.executeJavaScript(detectTheme);
 
-    mainWindow.webContents.executeJavaScript(forwardBack + detectTheme);
   };
 
   mainWindow.webContents.on("did-finish-load", applyStylesAndScripts);
@@ -120,10 +121,10 @@ const css = `
     background-color: rgba(255, 255, 255, 1) !important;
   }
 
-  img.img-fluid.ml-1.mb-2.darkmode-img.mt-4.ps-4,
+  /*img.img-fluid.ml-1.mb-2.darkmode-img.mt-4.ps-4,
   img.img-fluid.mb-2.darkmode-img.mt-4 
   {
     padding-top: 30px !important;
-  }
+  }*/
 
   `;
